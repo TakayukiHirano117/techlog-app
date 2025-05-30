@@ -88,9 +88,8 @@ describe 'User', type: :system do
   end
 
   describe 'ログイン機能の検証' do
-    # 事前にユーザー作成
     before do
-      create(:user, nickname: nickname, email: email, password: password, password_confirmation: password) # 事前にユーザー作成
+      create(:user, nickname: nickname, email: email, password: password, password_confirmation: password)
  
       visit '/users/sign_in'
       fill_in 'user_email', with: email
@@ -102,6 +101,10 @@ describe 'User', type: :system do
       it 'ログインに成功し、トップページにリダイレクトする' do
         expect(current_path).to eq('/')
       end
+ 
+      it 'ログイン成功時のフラッシュメッセージを表示する' do # 追加
+        expect(page).to have_content('Signed in successfully')
+      end
     end
  
     context '異常系' do
@@ -109,6 +112,10 @@ describe 'User', type: :system do
       it 'ログインに失敗し、ページ遷移しない' do
         expect(current_path).to eq('/users/sign_in')
       end
+ 
+      it 'ログイン失敗時のフラッシュメッセージを表示する' do  # 追加
+        expect(page).to have_content('Invalid Email or password')
+      end
     end
   end
-end
+  end
