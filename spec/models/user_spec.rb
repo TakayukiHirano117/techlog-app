@@ -10,7 +10,6 @@ describe User do
       @user = create(:user, nickname: nickname, email: email) # 修正
       @post = create(:post, title: 'タイトル', content: '本文', user_id: @user.id) # 修正
     end
- 
 
     subject { described_class.first }
 
